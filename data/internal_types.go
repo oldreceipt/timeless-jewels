@@ -31,11 +31,11 @@ const (
 
 type AlternatePassiveSkillInformation struct {
 	AlternatePassiveSkill                *AlternatePassiveSkill
-	StatRolls                            map[uint32]uint32
+	StatRolls                            map[uint32]int32
 	AlternatePassiveAdditionInformations []AlternatePassiveAdditionInformation
 }
 
 type AlternatePassiveAdditionInformation struct {
 	AlternatePassiveAddition *AlternatePassiveAddition
-	StatRolls                map[uint32]uint32
+	StatRolls                map[uint32]int32
 }
