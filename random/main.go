@@ -129,21 +129,13 @@ func (g *NumberGenerator) GenerateSingle(exclusiveMaximumValue uint32) uint32 {
 	return g.GenerateUInt() % exclusiveMaximumValue
 }
 
-func (g *NumberGenerator) Generate(minValue uint32, maxValue uint32) uint32 {
-	a := minValue + 0x80000000
-	b := maxValue + 0x80000000
-
-	if minValue >= 0x80000000 {
-		a = minValue + 0x80000000
-	}
-
-	if maxValue >= 0x80000000 {
-		b = maxValue + 0x80000000
-	}
+func (g *NumberGenerator) Generate(minValue int32, maxValue int32) int32 {
+	a := uint32(minValue) + 0x80000000
+	b := uint32(maxValue) + 0x80000000
 
 	roll := g.GenerateSingle((b - a) + 1)
 
-	return (roll + a) + 0x80000000
+	return int32((roll + a) + 0x80000000)
 }
 
 func ManipulateAlpha(value uint32) uint32 {

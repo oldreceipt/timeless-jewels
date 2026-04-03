@@ -25,7 +25,7 @@ func (a *AlternateTreeManager) IsPassiveSkillReplaced(rng *random.NumberGenerato
 		}
 
 		rng.Reset(a.PassiveSkill, a.TimelessJewel)
-		return rng.Generate(0, 100) < a.TimelessJewel.AlternateTreeVersion.NotableReplacementSpawnWeight
+		return uint32(rng.Generate(0, 100)) < a.TimelessJewel.AlternateTreeVersion.NotableReplacementSpawnWeight
 	}
 
 	if len(a.PassiveSkill.StatIndices) == 1 && data.IsSmallAttribute(a.PassiveSkill.StatIndices[0]) {
@@ -71,7 +71,7 @@ func (a *AlternateTreeManager) ReplacePassiveSkill(rng *random.NumberGenerator) 
 		alternatePassiveSkillKeyStone := data.GetAlternatePassiveSkillKeyStone(a.TimelessJewel)
 		return data.AlternatePassiveSkillInformation{
 			AlternatePassiveSkill: alternatePassiveSkillKeyStone,
-			StatRolls: map[uint32]uint32{
+			StatRolls: map[uint32]int32{
 				0: alternatePassiveSkillKeyStone.Stat1Min,
 			},
 		}
@@ -95,7 +95,7 @@ func (a *AlternateTreeManager) ReplacePassiveSkill(rng *random.NumberGenerator) 
 	}
 
 	elements := min(uint32(len(rolledAlternatePassiveSkill.StatsKeys)), 4)
-	alternatePassiveSkillStatRolls := make(map[uint32]uint32, elements)
+	alternatePassiveSkillStatRolls := make(map[uint32]int32, elements)
 	for i := range elements {
 		alternatePassiveSkillStatRolls[i] = rolledAlternatePassiveSkill.GetStatMinMax(true, i)
 
@@ -125,7 +125,7 @@ func (a *AlternateTreeManager) RollAdditions(minimumAdditions uint32, maximumAdd
 	additionCountRoll := minimumAdditions
 
 	if maximumAdditions > minimumAdditions {
-		additionCountRoll = rng.Generate(minimumAdditions, maximumAdditions)
+		additionCountRoll = uint32(rng.Generate(int32(minimumAdditions), int32(maximumAdditions)))
 	}
 
 	alternatePassiveAdditionInformations := make([]data.AlternatePassiveAdditionInformation, 0)
@@ -138,7 +138,7 @@ func (a *AlternateTreeManager) RollAdditions(minimumAdditions uint32, maximumAdd
 		}
 
 		elements := min(uint32(len(rolledAlternatePassiveAddition.StatsKeys)), 2)
-		alternatePassiveAdditionStatRolls := make(map[uint32]uint32, elements)
+		alternatePassiveAdditionStatRolls := make(map[uint32]int32, elements)
 		for j := range elements {
 			alternatePassiveAdditionStatRolls[j] = rolledAlternatePassiveAddition.GetStatMinMax(true, j)
 

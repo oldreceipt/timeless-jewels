@@ -21,10 +21,10 @@ func TestGloriousVanity(t *testing.T) {
 		{
 			jewel:     data.GloriousVanity,
 			conqueror: data.Xibaqua,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(12),
-				StatRolls:             map[uint32]uint32{0: 11},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(0),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 		{
@@ -33,7 +33,7 @@ func TestGloriousVanity(t *testing.T) {
 			passive:   411, // Instability (maximum_power_charges742)
 			result: data.AlternatePassiveSkillInformation{
 				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(67),
-				StatRolls:             map[uint32]uint32{0: 8, 1: 22},
+				StatRolls:             map[uint32]int32{0: 8, 1: 22},
 			},
 		},
 		{
@@ -42,7 +42,7 @@ func TestGloriousVanity(t *testing.T) {
 			passive:   519, // Intelligence (intelligence879)
 			result: data.AlternatePassiveSkillInformation{
 				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(38),
-				StatRolls:             map[uint32]uint32{0: 12},
+				StatRolls:             map[uint32]int32{0: 12},
 			},
 		},
 		{
@@ -50,8 +50,8 @@ func TestGloriousVanity(t *testing.T) {
 			conqueror: data.Xibaqua,
 			passive:   1190, // Attack Damage and Attack Speed with Shield (damage_while_using_shield1913)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(26),
-				StatRolls:             map[uint32]uint32{0: 4},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(21),
+				StatRolls:             map[uint32]int32{0: 3},
 			},
 		},
 		{
@@ -60,19 +60,19 @@ func TestGloriousVanity(t *testing.T) {
 			passive:   88, // Eagle Eye (eagle_eye199)
 			result: data.AlternatePassiveSkillInformation{
 				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(77),
-				StatRolls:             map[uint32]uint32{},
+				StatRolls:             map[uint32]int32{},
 				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
 					{
 						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(14),
-						StatRolls:                map[uint32]uint32{0: 6},
+						StatRolls:                map[uint32]int32{0: 6},
 					},
 					{
 						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(23),
-						StatRolls:                map[uint32]uint32{0: 5},
+						StatRolls:                map[uint32]int32{0: 5},
 					},
 					{
 						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(36),
-						StatRolls:                map[uint32]uint32{0: 11},
+						StatRolls:                map[uint32]int32{0: 11},
 					},
 				},
 			},
@@ -80,28 +80,28 @@ func TestGloriousVanity(t *testing.T) {
 		{
 			jewel:     data.GloriousVanity,
 			conqueror: data.Zerphi,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(12),
-				StatRolls:             map[uint32]uint32{0: 11},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(1),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 		{
 			jewel:     data.GloriousVanity,
 			conqueror: data.Ahuana,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(12),
-				StatRolls:             map[uint32]uint32{0: 11},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(2),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 		{
 			jewel:     data.GloriousVanity,
 			conqueror: data.Doryani,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(12),
-				StatRolls:             map[uint32]uint32{0: 11},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(3),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 	}
@@ -127,14 +127,10 @@ func TestLethalPride(t *testing.T) {
 		{
 			jewel:     data.LethalPride,
 			conqueror: data.Kaom,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
-					{
-						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(39),
-						StatRolls:                map[uint32]uint32{0: 4},
-					},
-				},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(78),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 		{
@@ -145,7 +141,7 @@ func TestLethalPride(t *testing.T) {
 				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
 					{
 						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(42),
-						StatRolls:                map[uint32]uint32{0: 20},
+						StatRolls:                map[uint32]int32{0: 20},
 					},
 				},
 			},
@@ -158,7 +154,7 @@ func TestLethalPride(t *testing.T) {
 				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
 					{
 						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(39),
-						StatRolls:                map[uint32]uint32{0: 4},
+						StatRolls:                map[uint32]int32{0: 4},
 					},
 				},
 			},
@@ -171,7 +167,7 @@ func TestLethalPride(t *testing.T) {
 				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
 					{
 						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(39),
-						StatRolls:                map[uint32]uint32{0: 4},
+						StatRolls:                map[uint32]int32{0: 4},
 					},
 				},
 			},
@@ -184,7 +180,7 @@ func TestLethalPride(t *testing.T) {
 				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
 					{
 						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(57),
-						StatRolls:                map[uint32]uint32{0: 12},
+						StatRolls:                map[uint32]int32{0: 12},
 					},
 				},
 			},
@@ -192,40 +188,28 @@ func TestLethalPride(t *testing.T) {
 		{
 			jewel:     data.LethalPride,
 			conqueror: data.Rakiata,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
-					{
-						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(39),
-						StatRolls:                map[uint32]uint32{0: 4},
-					},
-				},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(79),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 		{
 			jewel:     data.LethalPride,
 			conqueror: data.Kiloava,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
-					{
-						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(39),
-						StatRolls:                map[uint32]uint32{0: 4},
-					},
-				},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(80),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 		{
 			jewel:     data.LethalPride,
 			conqueror: data.Akoya,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
-					{
-						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(39),
-						StatRolls:                map[uint32]uint32{0: 4},
-					},
-				},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(81),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 	}
@@ -251,14 +235,10 @@ func TestBrutalRestraint(t *testing.T) {
 		{
 			jewel:     data.BrutalRestraint,
 			conqueror: data.Deshret,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
-					{
-						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(66),
-						StatRolls:                map[uint32]uint32{0: 4},
-					},
-				},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(82),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 		{
@@ -269,7 +249,7 @@ func TestBrutalRestraint(t *testing.T) {
 				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
 					{
 						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(70),
-						StatRolls:                map[uint32]uint32{0: 10},
+						StatRolls:                map[uint32]int32{0: 10},
 					},
 				},
 			},
@@ -282,7 +262,7 @@ func TestBrutalRestraint(t *testing.T) {
 				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
 					{
 						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(66),
-						StatRolls:                map[uint32]uint32{0: 4},
+						StatRolls:                map[uint32]int32{0: 4},
 					},
 				},
 			},
@@ -295,7 +275,7 @@ func TestBrutalRestraint(t *testing.T) {
 				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
 					{
 						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(66),
-						StatRolls:                map[uint32]uint32{0: 4},
+						StatRolls:                map[uint32]int32{0: 4},
 					},
 				},
 			},
@@ -308,7 +288,7 @@ func TestBrutalRestraint(t *testing.T) {
 				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
 					{
 						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(76),
-						StatRolls:                map[uint32]uint32{0: 20},
+						StatRolls:                map[uint32]int32{0: 20},
 					},
 				},
 			},
@@ -316,40 +296,28 @@ func TestBrutalRestraint(t *testing.T) {
 		{
 			jewel:     data.BrutalRestraint,
 			conqueror: data.Balbala,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
-					{
-						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(66),
-						StatRolls:                map[uint32]uint32{0: 4},
-					},
-				},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(83),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 		{
 			jewel:     data.BrutalRestraint,
 			conqueror: data.Asenath,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
-					{
-						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(66),
-						StatRolls:                map[uint32]uint32{0: 4},
-					},
-				},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(84),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 		{
 			jewel:     data.BrutalRestraint,
 			conqueror: data.Nasima,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
-					{
-						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(66),
-						StatRolls:                map[uint32]uint32{0: 4},
-					},
-				},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(85),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 	}
@@ -375,14 +343,10 @@ func TestMilitantFaith(t *testing.T) {
 		{
 			jewel:     data.MilitantFaith,
 			conqueror: data.Venarius,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
-					{
-						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(92),
-						StatRolls:                map[uint32]uint32{0: 5},
-					},
-				},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(86),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 		{
@@ -393,7 +357,7 @@ func TestMilitantFaith(t *testing.T) {
 				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
 					{
 						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(93),
-						StatRolls:                map[uint32]uint32{0: 5},
+						StatRolls:                map[uint32]int32{0: 5},
 					},
 				},
 			},
@@ -406,7 +370,7 @@ func TestMilitantFaith(t *testing.T) {
 				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
 					{
 						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(92),
-						StatRolls:                map[uint32]uint32{0: 5},
+						StatRolls:                map[uint32]int32{0: 5},
 					},
 				},
 			},
@@ -419,7 +383,7 @@ func TestMilitantFaith(t *testing.T) {
 				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
 					{
 						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(92),
-						StatRolls:                map[uint32]uint32{0: 5},
+						StatRolls:                map[uint32]int32{0: 5},
 					},
 				},
 			},
@@ -432,7 +396,7 @@ func TestMilitantFaith(t *testing.T) {
 				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
 					{
 						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(93),
-						StatRolls:                map[uint32]uint32{0: 5},
+						StatRolls:                map[uint32]int32{0: 5},
 					},
 				},
 			},
@@ -440,40 +404,28 @@ func TestMilitantFaith(t *testing.T) {
 		{
 			jewel:     data.MilitantFaith,
 			conqueror: data.Maxarius,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
-					{
-						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(92),
-						StatRolls:                map[uint32]uint32{0: 5},
-					},
-				},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(87),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 		{
 			jewel:     data.MilitantFaith,
 			conqueror: data.Dominus,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
-					{
-						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(92),
-						StatRolls:                map[uint32]uint32{0: 5},
-					},
-				},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(88),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 		{
 			jewel:     data.MilitantFaith,
 			conqueror: data.Avarius,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
-					{
-						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(92),
-						StatRolls:                map[uint32]uint32{0: 5},
-					},
-				},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(89),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 	}
@@ -499,10 +451,10 @@ func TestElegantHubris(t *testing.T) {
 		{
 			jewel:     data.ElegantHubris,
 			conqueror: data.Cadiro,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(109),
-				StatRolls:             map[uint32]uint32{},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(105),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 		{
@@ -511,7 +463,7 @@ func TestElegantHubris(t *testing.T) {
 			passive:   411, // Instability (maximum_power_charges742)
 			result: data.AlternatePassiveSkillInformation{
 				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(123),
-				StatRolls:             map[uint32]uint32{0: 30},
+				StatRolls:             map[uint32]int32{0: 30},
 			},
 		},
 		{
@@ -520,7 +472,7 @@ func TestElegantHubris(t *testing.T) {
 			passive:   519, // Intelligence (intelligence879)
 			result: data.AlternatePassiveSkillInformation{
 				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(109),
-				StatRolls:             map[uint32]uint32{},
+				StatRolls:             map[uint32]int32{},
 			},
 		},
 		{
@@ -529,7 +481,7 @@ func TestElegantHubris(t *testing.T) {
 			passive:   1190, // Attack Damage and Attack Speed with Shield (damage_while_using_shield1913)
 			result: data.AlternatePassiveSkillInformation{
 				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(109),
-				StatRolls:             map[uint32]uint32{},
+				StatRolls:             map[uint32]int32{},
 			},
 		},
 		{
@@ -538,34 +490,103 @@ func TestElegantHubris(t *testing.T) {
 			passive:   88, // Eagle Eye (eagle_eye199)
 			result: data.AlternatePassiveSkillInformation{
 				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(137),
-				StatRolls:             map[uint32]uint32{0: 80},
+				StatRolls:             map[uint32]int32{0: 80},
 			},
 		},
 		{
 			jewel:     data.ElegantHubris,
 			conqueror: data.Victario,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(109),
-				StatRolls:             map[uint32]uint32{},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(106),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 		{
 			jewel:     data.ElegantHubris,
 			conqueror: data.Chitus,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(109),
-				StatRolls:             map[uint32]uint32{},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(107),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 		{
 			jewel:     data.ElegantHubris,
 			conqueror: data.Caspiro,
-			passive:   2286, // Doomsday (hex_zone_keystone2800_)
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
 			result: data.AlternatePassiveSkillInformation{
-				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(109),
-				StatRolls:             map[uint32]uint32{},
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(108),
+				StatRolls:             map[uint32]int32{0: 1},
+			},
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(string(test.conqueror), func(t *testing.T) {
+			t.Run(strconv.Itoa(int(test.passive)), func(t *testing.T) {
+				testza.AssertEqual(t, test.result, calculator.Calculate(test.passive, seed, test.jewel, test.conqueror))
+			})
+		})
+	}
+}
+
+func TestHeroicTragedy(t *testing.T) {
+	const seed = 1000
+
+	tests := []struct {
+		jewel     data.JewelType
+		conqueror data.Conqueror
+		passive   uint32
+		result    data.AlternatePassiveSkillInformation
+	}{
+		{
+			jewel:     data.HeroicTragedy,
+			conqueror: data.Vorana,
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
+			result: data.AlternatePassiveSkillInformation{
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(179),
+				StatRolls:             map[uint32]int32{0: 1},
+			},
+		},
+		{
+			jewel:     data.HeroicTragedy,
+			conqueror: data.Vorana,
+			passive:   411, // Instability (maximum_power_charges742)
+			result: data.AlternatePassiveSkillInformation{
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(168),
+				StatRolls:             map[uint32]int32{0: 10, 1: 5},
+			},
+		},
+		{
+			jewel:     data.HeroicTragedy,
+			conqueror: data.Vorana,
+			passive:   519, // Intelligence (intelligence879)
+			result: data.AlternatePassiveSkillInformation{
+				AlternatePassiveAdditionInformations: []data.AlternatePassiveAdditionInformation{
+					{
+						AlternatePassiveAddition: data.GetAlternatePassiveAdditionByIndex(94),
+						StatRolls:                map[uint32]int32{0: 2},
+					},
+				},
+			},
+		},
+		{
+			jewel:     data.HeroicTragedy,
+			conqueror: data.Medved,
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
+			result: data.AlternatePassiveSkillInformation{
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(180),
+				StatRolls:             map[uint32]int32{0: 1},
+			},
+		},
+		{
+			jewel:     data.HeroicTragedy,
+			conqueror: data.Uhtred,
+			passive:   2286, // Supreme Ego (supreme_ego_keystone2696)
+			result: data.AlternatePassiveSkillInformation{
+				AlternatePassiveSkill: data.GetAlternatePassiveSkillByIndex(181),
+				StatRolls:             map[uint32]int32{0: 1},
 			},
 		},
 	}
