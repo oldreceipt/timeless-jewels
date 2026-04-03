@@ -336,6 +336,26 @@ export interface SearchResults {
   raw: SearchWithSeed[];
 }
 
+export interface PinnedNode {
+  passiveIndex: number;
+  statIds: number[];
+}
+
+export interface SimilarSeedsConfig {
+  seed: number;
+  jewel: number;
+  conqueror: string;
+  nodes: number[];
+  topN: number;
+  pinnedNodes?: PinnedNode[];
+}
+
+export interface SimilarSeedResult {
+  seed: number;
+  score: number;
+  maxScore: number;
+}
+
 export const translateStat = (id: number, roll?: number | undefined): string => {
   const stat = getStat(id);
   const translation = inverseTranslations[stat.ID];

@@ -17,6 +17,17 @@ const config = {
     }),
     paths: {
       base: '/timeless-jewels'
+    },
+    typescript: {
+      config(cfg) {
+        // importsNotUsedAsValues and preserveValueImports were removed in TS 5.5.
+        // Replace them with verbatimModuleSyntax which is the TS 5.5+ equivalent.
+        delete cfg.compilerOptions.importsNotUsedAsValues;
+        delete cfg.compilerOptions.preserveValueImports;
+        delete cfg.compilerOptions.ignoreDeprecations;
+        cfg.compilerOptions.verbatimModuleSyntax = true;
+        return cfg;
+      }
     }
   }
 };

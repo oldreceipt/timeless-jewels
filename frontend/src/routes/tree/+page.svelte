@@ -64,6 +64,33 @@
             )
           }));
 
+  $: filteredSeedResults = seedResults.filter((r) => !disabled.has(r.node));
+
+  // pinned tree node skill IDs
+  let pinnedNodeIds: number[] = [];
+
+  $: { circledNode; selectedJewel; selectedConqueror; pinnedNodeIds = []; }
+
+  const getNodeStatIds = (nodeSkillId: number): number[] => {
+    const r = seedResults.find((s) => s.node === nodeSkillId);
+    if (!r) return [];
+    const ids: number[] = [];
+    r.result.AlternatePassiveSkill?.StatsKeys?.forEach((k) => ids.push(k));
+    r.result.AlternatePassiveAdditionInformations?.forEach((info) =>
+      info.AlternatePassiveAddition?.StatsKeys?.forEach((k) => ids.push(k))
+    );
+    return ids;
+  };
+
+  const togglePin = (nodeSkillId: number) => {
+    if (pinnedNodeIds.includes(nodeSkillId)) {
+      pinnedNodeIds = pinnedNodeIds.filter((id) => id !== nodeSkillId);
+    } else if (affectedNodes.some((n) => n.skill === nodeSkillId)) {
+      pinnedNodeIds = [...pinnedNodeIds, nodeSkillId];
+    }
+    highlighted = [...pinnedNodeIds];
+  };
+
   let selectedStats: Record<number, StatConfig> = {};
   if (searchParams.has('stat')) {
     searchParams.getAll('stat').forEach((s) => {
@@ -112,14 +139,17 @@
       circledNode = node.skill;
       updateUrl();
     } else if (!node.isMastery) {
-      if (disabled.has(node.skill)) {
-        disabled.delete(node.skill);
+      if (mode === 'seed') {
+        togglePin(node.skill);
       } else {
-        disabled.add(node.skill);
+        if (disabled.has(node.skill)) {
+          disabled.delete(node.skill);
+        } else {
+          disabled.add(node.skill);
+        }
+        disabled = disabled;
+        updateUrl();
       }
-      // Re-assign to update svelte
-      disabled = disabled;
-      updateUrl();
     }
   };
 
@@ -206,6 +236,75 @@
     seed = newSeed;
     highlighted = passives;
     updateUrl();
+  };
+
+  type StatDiff = { gained: string[]; lost: string[] };
+  let similarPreview: { seed: number; diff: StatDiff } | undefined;
+
+  const getStatIds = (s: number): Set<number> => {
+    const ids = new Set<number>();
+    affectedNodes
+      .filter((n) => !!data.TreeToPassive[n.skill])
+      .forEach((n) => {
+        const r = calculator.Calculate(data.TreeToPassive[n.skill].Index, s, selectedJewel.value, selectedConqueror.value);
+        r.AlternatePassiveSkill?.StatsKeys?.forEach((k) => ids.add(k));
+        r.AlternatePassiveAdditionInformations?.forEach((info) =>
+          info.AlternatePassiveAddition?.StatsKeys?.forEach((k) => ids.add(k))
+        );
+      });
+    return ids;
+  };
+
+  const previewSimilar = (candidateSeed: number) => {
+    if (similarPreview?.seed === candidateSeed) {
+      similarPreview = undefined;
+      return;
+    }
+    const currentIds = getStatIds(seed);
+    const candidateIds = getStatIds(candidateSeed);
+    similarPreview = {
+      seed: candidateSeed,
+      diff: {
+        gained: [...candidateIds].filter((id) => !currentIds.has(id)).map((id) => translateStat(id)),
+        lost: [...currentIds].filter((id) => !candidateIds.has(id)).map((id) => translateStat(id))
+      }
+    };
+  };
+
+  $: comparedSeed = similarPreview?.seed;
+
+  let similarSearching = false;
+  let similarCurrentSeed = 0;
+  let similarResults: import('../../lib/skill_tree').SimilarSeedResult[] | undefined;
+  const findSimilar = () => {
+    if (!circledNode || !selectedJewel || !selectedConqueror) return;
+    similarSearching = true;
+    similarResults = undefined;
+    syncWrap
+      .findSimilar(
+        {
+          seed,
+          jewel: selectedJewel.value,
+          conqueror: selectedConqueror.value,
+          nodes: filteredSeedResults
+            .map((r) => data.TreeToPassive[r.node]?.Index)
+            .filter((i) => i !== undefined),
+          topN: 20,
+          pinnedNodes: pinnedNodeIds.length > 0
+            ? pinnedNodeIds
+                .filter((id) => !!data.TreeToPassive[id])
+                .map((id) => ({
+                  passiveIndex: data.TreeToPassive[id].Index,
+                  statIds: getNodeStatIds(id)
+                }))
+            : undefined
+        },
+        proxy((s) => (similarCurrentSeed = s))
+      )
+      .then((r) => {
+        similarResults = r;
+        similarSearching = false;
+      });
   };
 
   const selectAll = () => {
@@ -473,6 +572,7 @@
   selectedConqueror={selectedConqueror?.value}
   {highlighted}
   {seed}
+  {comparedSeed}
   highlightJewels={!circledNode}
   disabled={[...disabled]}>
   {#if !collapsed}
@@ -583,7 +683,7 @@
 
                   {#if !split}
                     <ul class="mt-4 overflow-auto" class:rainbow={colored}>
-                      {#each sortCombined(combineResults(seedResults, colored, 'all'), sortOrder.value) as r}
+                      {#each sortCombined(combineResults(filteredSeedResults, colored, 'all'), sortOrder.value) as r}
                         <li class="cursor-pointer" on:click={() => highlight(seed, r.passives)}>
                           <span class="font-bold" class:text-white={(statValues[r.id] || 0) < 3}
                             >({r.passives.length})</span>
@@ -595,7 +695,7 @@
                     <div class="overflow-auto mt-4">
                       <h3>Notables</h3>
                       <ul class="mt-1" class:rainbow={colored}>
-                        {#each sortCombined(combineResults(seedResults, colored, 'notables'), sortOrder.value) as r}
+                        {#each sortCombined(combineResults(filteredSeedResults, colored, 'notables'), sortOrder.value) as r}
                           <li class="cursor-pointer" on:click={() => highlight(seed, r.passives)}>
                             <span class="font-bold" class:text-white={(statValues[r.id] || 0) < 3}
                               >({r.passives.length})</span>
@@ -606,7 +706,7 @@
 
                       <h3 class="mt-2">Smalls</h3>
                       <ul class="mt-1" class:rainbow={colored}>
-                        {#each sortCombined(combineResults(seedResults, colored, 'passives'), sortOrder.value) as r}
+                        {#each sortCombined(combineResults(filteredSeedResults, colored, 'passives'), sortOrder.value) as r}
                           <li class="cursor-pointer" on:click={() => highlight(seed, r.passives)}>
                             <span class="font-bold" class:text-white={(statValues[r.id] || 0) < 3}
                               >({r.passives.length})</span>
@@ -614,6 +714,57 @@
                           </li>
                         {/each}
                       </ul>
+                    </div>
+                  {/if}
+                  {#if circledNode}
+                    <div class="mt-4 flex flex-col">
+                      <button
+                        class="p-2 px-3 bg-purple-500/40 rounded disabled:bg-purple-900/40"
+                        on:click={findSimilar}
+                        disabled={similarSearching}>
+                        {#if similarSearching}
+                          Searching... {similarCurrentSeed} / {data.TimelessJewelSeedRanges[selectedJewel.value].Max}
+                        {:else if pinnedNodeIds.length > 0}
+                          Find Similar ({pinnedNodeIds.length} pinned)
+                        {:else}
+                          Find Similar Seeds
+                        {/if}
+                      </button>
+                      {#if similarResults}
+                        <ul class="mt-2 overflow-auto max-h-96">
+                          {#each similarResults as r}
+                            <li class="border-b border-neutral-700">
+                              <button
+                                class="w-full flex flex-row justify-between py-1 hover:text-white text-left"
+                                on:click={() => previewSimilar(r.seed)}>
+                                <span>Seed {r.seed}</span>
+                                <span class="text-neutral-400">{r.score} / {r.maxScore} {pinnedNodeIds.length > 0 ? 'nodes' : 'stats'} match</span>
+                              </button>
+                              {#if similarPreview?.seed === r.seed}
+                                <div class="pb-2 text-sm">
+                                  {#if similarPreview.diff.gained.length}
+                                    <div class="text-green-400 font-bold mb-1">+ Gained</div>
+                                    {#each similarPreview.diff.gained as s}
+                                      <div class="text-green-400 pl-2">{s}</div>
+                                    {/each}
+                                  {/if}
+                                  {#if similarPreview.diff.lost.length}
+                                    <div class="text-red-400 font-bold mt-1 mb-1">− Lost</div>
+                                    {#each similarPreview.diff.lost as s}
+                                      <div class="text-red-400 pl-2">{s}</div>
+                                    {/each}
+                                  {/if}
+                                  <button
+                                    class="mt-2 px-3 py-1 bg-purple-500/40 rounded text-xs"
+                                    on:click={() => { seed = r.seed; similarPreview = undefined; similarResults = undefined; updateUrl(); }}>
+                                    Use this seed
+                                  </button>
+                                </div>
+                              {/if}
+                            </li>
+                          {/each}
+                        </ul>
+                      {/if}
                     </div>
                   {/if}
                 {/if}

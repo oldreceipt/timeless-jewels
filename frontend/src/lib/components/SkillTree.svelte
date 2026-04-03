@@ -25,6 +25,7 @@
   export let selectedJewel: number;
   export let selectedConqueror: string;
   export let seed: number;
+  export let comparedSeed: number | undefined = undefined;
   export let highlighted: number[] = [];
   export let disabled: number[] = [];
   export let highlightJewels = false;
@@ -327,6 +328,24 @@
       context.stroke();
     }
 
+    const getResultStats = (nodeSkill: number, s: number): { id: number; text: string }[] => {
+      const stats: { id: number; text: string }[] = [];
+      const r = calculator.Calculate(data.TreeToPassive[nodeSkill].Index, s, selectedJewel, selectedConqueror);
+      r.AlternatePassiveSkill?.StatsKeys?.forEach((statId, i) => {
+        const stat = data.GetStatByIndex(statId);
+        const t = inverseTranslations[stat.ID];
+        if (t) stats.push({ id: statId, text: formatStats(t, r.StatRolls[i]) || stat.ID });
+      });
+      r.AlternatePassiveAdditionInformations?.forEach((info) => {
+        info.AlternatePassiveAddition?.StatsKeys?.forEach((statId, i) => {
+          const stat = data.GetStatByIndex(statId);
+          const t = inverseTranslations[stat.ID];
+          if (t) stats.push({ id: statId, text: formatStats(t, info.StatRolls[i]) || stat.ID });
+        });
+      });
+      return stats;
+    };
+
     if (hoveredNode) {
       let nodeName = hoveredNode.name;
       let nodeStats: { text: string; special: boolean }[] = (hoveredNode.stats || []).map((s) => ({
@@ -393,6 +412,7 @@
         text: string;
         offset: number;
         special: boolean;
+        color?: string;
       }[] = [];
 
       const padding = 30;
@@ -431,6 +451,43 @@
         offset += 20;
       }
 
+      if (comparedSeed && hoveredNodeActive && hoveredNode.skill && data.TreeToPassive[hoveredNode.skill]) {
+        const curStats = getResultStats(hoveredNode.skill, seed);
+        const cmpStats = getResultStats(hoveredNode.skill, comparedSeed);
+
+        const curIds = new Set(curStats.map((s) => s.id));
+        const cmpIds = new Set(cmpStats.map((s) => s.id));
+
+        const matched = curStats.filter((s) => cmpIds.has(s.id) && cmpStats.find((c) => c.id === s.id).text === s.text);
+        const changed = curStats.filter((s) => cmpIds.has(s.id) && cmpStats.find((c) => c.id === s.id).text !== s.text);
+        const gained  = curStats.filter((s) => !cmpIds.has(s.id));
+        const lost    = cmpStats.filter((s) => !curIds.has(s.id));
+
+        offset += 10;
+        allLines.push({ text: `vs seed ${comparedSeed}`, offset, special: false, color: '#888888' });
+        offset += 22;
+
+        matched.forEach((s) => {
+          allLines.push({ text: `✓ ${s.text}`, offset, special: false, color: '#6b7280' });
+          offset += 20;
+        });
+        changed.forEach((s) => {
+          const cmp = cmpStats.find((c) => c.id === s.id);
+          allLines.push({ text: `  ${s.text}`, offset, special: false, color: '#ffffff' });
+          offset += 20;
+          allLines.push({ text: `  ${cmp.text}`, offset, special: false, color: '#fb923c' });
+          offset += 20;
+        });
+        gained.forEach((s) => {
+          allLines.push({ text: `+ ${s.text}`, offset, special: false, color: '#4ade80' });
+          offset += 20;
+        });
+        lost.forEach((s) => {
+          allLines.push({ text: `− ${s.text}`, offset, special: false, color: '#f87171' });
+          offset += 20;
+        });
+      }
+
       const titleHeight = 55;
 
       context.fillStyle = 'rgba(75,63,24,0.9)';
@@ -447,17 +504,12 @@
       context.font = statsFont;
       context.textAlign = 'left';
       allLines.forEach((l) => {
-        if (l.special) {
-          context.fillStyle = '#8cf34c';
-        } else {
-          context.fillStyle = '#ffffff';
-        }
-
+        context.fillStyle = l.color ?? (l.special ? '#8cf34c' : '#ffffff');
         context.fillText(l.text, mousePos.x + padding / 2, mousePos.y + l.offset);
       });
     }
 
-    if (hoveredNode && hoveredNode.isJewelSocket) {
+    if (hoveredNode && (hoveredNode.isJewelSocket || !hoveredNode.isMastery)) {
       cursor = 'pointer';
     } else {
       cursor = 'unset';
